@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Define o tempo máximo de espera pelo banco (em segundos)
+timeout=500
+elapsed=0
+
+echo "⏳ Aguardando o banco de dados estar disponível..."
+
+# Aguarda o banco estar pronto antes de executar as migrations
+until pg_isready -h "$DB_HOST" -p "$DB_PORT" > /dev/null 2>&1 || [ $elapsed -ge $timeout ]; do
+    sleep 3
+    elapsed=$((elapsed + 3))
+    echo "Ainda aguardando... ($elapsed s)"
+done
+
+if [ $elapsed -ge $timeout ]; then
+    echo "❌ Timeout: Banco de dados não respondeu a tempo"
+    exit 1
+fi
+
+echo "✅ Banco de dados disponível. Rodando migrations..."
+
+# Executa as migrations
+php artisan migrate --force
+
+# Continua com o comando original do container
+exec "$@"
