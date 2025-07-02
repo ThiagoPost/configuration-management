@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tarefa;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TarefaController extends Controller
 {
@@ -28,7 +29,7 @@ class TarefaController extends Controller
         $tarefas = $query->orderBy('data_criacao', 'desc')->get();
 
         return view('tarefas.index', compact('tarefas'));
-}
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -100,5 +101,14 @@ class TarefaController extends Controller
     {
         Tarefa::destroy($id);
         return redirect()->route('tarefas.index')->with('message', 'Tarefa excluída com sucesso!');
+    }
+
+    public function exportarPdf()
+    {
+        $tarefas = Tarefa::all();
+
+        $pdf = Pdf::loadView('tarefas.pdf', compact('tarefas'));
+
+        return $pdf->download('lista_tarefas.pdf');
     }
 }

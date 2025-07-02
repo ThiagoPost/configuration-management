@@ -14,7 +14,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Rotas do CRUD de tarefas protegidas
+    // ✅ PRIMEIRO definimos a rota personalizada
+    Route::get('/tarefas/exportar-pdf', [TarefaController::class, 'exportarPdf'])->name('tarefas.exportarPdf');
+
+    // ✅ DEPOIS vem o resource
     Route::resource('tarefas', TarefaController::class);
 
     // Rotas do perfil

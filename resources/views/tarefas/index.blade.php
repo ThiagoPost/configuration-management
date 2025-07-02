@@ -14,7 +14,7 @@
         <h1>Tarefas</h1>
         <div class="d-flex gap-2">
             <a href="{{ route('tarefas.create') }}" class="btn btn-primary">Nova Tarefa</a>
-    
+            <a href="{{ route('tarefas.exportarPdf') }}" class="btn btn-outline-dark">Exportar PDF</a>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-outline-danger">Sair</button>
