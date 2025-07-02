@@ -12,7 +12,14 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>Tarefas</h1>
-        <a href="{{ route('tarefas.create') }}" class="btn btn-primary">Nova Tarefa</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('tarefas.create') }}" class="btn btn-primary">Nova Tarefa</a>
+    
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger">Sair</button>
+            </form>
+        </div>
     </div>
 
     <form method="GET" action="{{ route('tarefas.index') }}" class="row g-3 mb-4">
