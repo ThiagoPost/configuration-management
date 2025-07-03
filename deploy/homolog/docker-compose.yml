@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ../../
+      dockerfile: deploy/homolog/Dockerfile
+    container_name: laravel_app_homolog
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+    entrypoint: ["/usr/local/bin/entrypoint"]
+    command: ["php-fpm"]
+    environment:
+      - APP_ENV=homolog
+      - APP_DEBUG=true
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=laravel_homolog
+      - DB_USERNAME=homologuser
+      - DB_PASSWORD=homologpassword
+
+  nginx:
+    image: nginx:stable
+    container_name: nginx_server_homolog
+    ports:
+      - "8001:80"
+    volumes:
+      - ./:/var/www
+      - ../../nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  db:
+    image: postgres:15
+    container_name: pgsql_db_homolog
+    environment:
+      POSTGRES_DB: laravel_homolog
+      POSTGRES_USER: homologuser
+      POSTGRES_PASSWORD: homologpassword
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata_homolog:/var/lib/postgresql/data
+
+volumes:
+  pgdata_homolog:
