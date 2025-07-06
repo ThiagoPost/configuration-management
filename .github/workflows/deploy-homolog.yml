@@ -16,5 +16,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/univates/configuration-task/configuration-management
-            bash deploy/homolog/deploy-homolog.sh
+            cd /home/univates/configuration-task/configuration-management/deploy/homolog
+            bash deploy-homolog.sh
