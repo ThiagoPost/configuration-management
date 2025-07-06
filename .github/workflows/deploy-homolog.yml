@@ -1,0 +1,20 @@
+# .github/workflows/deploy-homolog.yml
+name: Deploy Homolog
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Executar deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/univates/configuration-task/configuration-management/deploy/homolog
+            bash deploy-homolog.sh
