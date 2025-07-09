@@ -11,7 +11,7 @@
 <div class="container mt-5">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Tarefas</h1>
+        <h1>Tarefas FINAL</h1>
         <div class="d-flex gap-2">
             <a href="{{ route('tarefas.create') }}" class="btn btn-primary">Nova Tarefa</a>
             <a href="{{ route('tarefas.exportarPdf') }}" class="btn btn-outline-dark">Exportar PDF</a>
